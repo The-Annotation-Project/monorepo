@@ -11,6 +11,7 @@ importers:
       '@testing-library/jest-dom': ^5.16.5
       '@testing-library/react': ^13.4.0
       '@testing-library/user-event': ^13.5.0
+      '@the-annotation-project/debate-data': workspace:*
       '@types/jest': ^27.5.2
       '@types/node': ^16.18.38
       '@types/react': ^18.2.14
@@ -24,6 +25,7 @@ importers:
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_react-dom@18.2.0+react@18.2.0
       '@testing-library/user-event': 13.5.0
+      '@the-annotation-project/debate-data': link:../../data/debates
       '@types/jest': 27.5.2
       '@types/node': 16.18.38
       '@types/react': 18.2.14
@@ -35,6 +37,9 @@ importers:
       web-vitals: 2.1.4
     devDependencies:
       '@babel/plugin-proposal-private-property-in-object': 7.21.11
+
+  ../../data/debates:
+    specifiers: {}
 
   ../../tools/assembly:
     specifiers:
@@ -9636,7 +9641,7 @@ packages:
       schema-utils: 3.3.0
       serialize-javascript: 6.0.1
       terser: 5.18.2
-      webpack: 5.88.1
+      webpack: 5.88.1_webpack-cli@4.10.0
 
   /terser/5.18.2:
     resolution: {integrity: sha512-Ah19JS86ypbJzTzvUCX7KOsEIhDaRONungA4aYBjEP3JZRf4ocuDzTg4QWZnPn9DEMiMYGJPiSOy7aykoCc70w==}

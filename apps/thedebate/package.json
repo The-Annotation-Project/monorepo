@@ -15,7 +15,8 @@
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "@the-annotation-project/debate-data": "workspace:*"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "~7.21.11"
