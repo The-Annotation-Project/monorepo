@@ -498,6 +498,10 @@
     {
       "packageName": "@the-annotation-project/thedebate",
       "projectFolder": "apps/thedebate"
+    },
+    {
+      "packageName": "@the-annotation-project/debate-data",
+      "projectFolder": "data/debates"
     }
   ]
 }

@@ -1,6 +1,8 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import * as transcript from "@the-annotation-project/debate-data/BushVGore2000/Debate2/transcription.json";
+import * as annotations from "@the-annotation-project/debate-data/BushVGore2000/Debate2/annotations.json";
 
 function App() {
   return (
