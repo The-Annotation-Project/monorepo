@@ -3,6 +3,9 @@
     "start": 94670,
     "end": 98000,
     "text": "Here's my annotation",
+    "annotatedBy": {
+      "name": "UserA"
+    },
     "type": "ClassishName",
     "data": {}
   }
