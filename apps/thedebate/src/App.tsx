@@ -1,12 +1,18 @@
-import React from "react";
+import React, { Suspense, lazy, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import {
-  annotationData,
-  transcriptionData,
-} from "@the-annotation-project/debate-data/BushVGore2000/Debate2";
+
+// Use imports if we don't want to code split
+// import {
+//   annotationData,
+//   transcriptionData,
+// } from "@the-annotation-project/debate-data/BushVGore2000/Debate2";
+
+const BoringButCool = lazy(() => import("./components/BoringButCool"));
 
 function App() {
+  const [showComponent, setShowComponent] = useState(false);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -14,14 +20,14 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <button onClick={() => setShowComponent(!showComponent)}>
+          Toggle Component
+        </button>
+        {showComponent && (
+          <Suspense fallback={<div>fetching...</div>}>
+            <BoringButCool />
+          </Suspense>
+        )}
       </header>
     </div>
   );

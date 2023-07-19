@@ -39,7 +39,12 @@ importers:
       '@babel/plugin-proposal-private-property-in-object': 7.21.11
 
   ../../data/debates:
-    specifiers: {}
+    specifiers:
+      tslib: 2.6.0
+      typescript: 5.1.6
+    devDependencies:
+      tslib: 2.6.0
+      typescript: 5.1.6
 
   ../../tools/assembly:
     specifiers:
@@ -9902,6 +9907,12 @@ packages:
     resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
     engines: {node: '>=4.2.0'}
     hasBin: true
+
+  /typescript/5.1.6:
+    resolution: {integrity: sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+    dev: true
 
   /unbox-primitive/1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}

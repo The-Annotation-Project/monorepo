@@ -1,9 +1,13 @@
 {
   "name": "@the-annotation-project/debate-data",
   "version": "1.0.0",
-  "main": "src/types.ts",
+  "main": "build/src/index.js",
   "license": "MIT",
   "scripts": {
-    "build": "echo 'No build'"
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "5.1.6",
+    "tslib": "2.6.0"
   }
 }
