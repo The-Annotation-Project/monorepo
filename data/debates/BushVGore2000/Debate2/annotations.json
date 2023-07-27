@@ -10,5 +10,11 @@
     ],
     "type": "PlainText",
     "data": {}
+  },
+  {
+    "start": 94670,
+    "end": 98000,
+    "asnwered": true
+    "type": "AnsweredQuestion",
   }
 ]
