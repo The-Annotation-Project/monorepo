@@ -265,7 +265,7 @@ const handleTranscriptionInbox = async (minioWebhook: MinioWebhook) => {
   const data = {
     audio_url: presignedUrl,
     speaker_labels: true,
-    entity_detection: true,
+    // entity_detection: true,
     webhook_url: `${config.selfHost}/assembly-callback`,
   };
 
