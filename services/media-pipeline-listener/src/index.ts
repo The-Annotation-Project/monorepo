@@ -350,7 +350,7 @@ app.post("/assembly-callback", async (req, res) => {
       await minioClient.putObject(
         "transcription-outbox",
         [transcript_id, "json"].join("."),
-        pollingResponse.data
+        JSON.stringify(pollingResponse.data)
       );
       break;
     } else if (transcriptionResult.status === "error") {
