@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "incremental": true,
+    "target": "ES2018",
+    "lib": ["esnext"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "declaration": false /* Enable this ONLY for projects which publish packages */,
+    "declarationMap": false,
+    "sourceMap": false /* Disable for production builds */,
+    "outDir": "build",
+    "removeComments": false /* Enable for production builds */,
+    "noEmit": false /* Enable for CI tests */,
+    "newLine": "lf",
+    "noEmitOnError": true,
+    "preserveConstEnums": true /* Lowers memory footprint */,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "importHelpers": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": false /* Enable in testing */,
+    "noUnusedParameters": false /* Enable in testing */,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": false,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": true /* Disable in releases */,
+    "skipLibCheck": true,
+    "resolveJsonModule": true
+  },
+  "ts-node": {
+    "transpileOnly": true
+  }
+}

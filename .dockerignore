@@ -68,4 +68,3 @@ common/autoinstallers/*/.npmrc
 .heft
 
 bundle/
-data/
