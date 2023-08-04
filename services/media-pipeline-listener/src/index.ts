@@ -298,6 +298,7 @@ const handleTranscriptionInbox = async (minioWebhook: MinioWebhook) => {
     } else {
       await new Promise((resolve) => setTimeout(resolve, 3000));
     }
+    await sleep(500);
   }
 
   await sleep(500);
