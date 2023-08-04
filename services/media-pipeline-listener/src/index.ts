@@ -86,11 +86,22 @@ try {
 } catch {}
 
 const config = {
+  selfHost: process.env.SELF_HOST ?? "https://media-pipeline.apps.hooli.co",
   s3: {
     accessKey: process.env.S3_ACCESS_KEY ?? "",
     secretKey: process.env.S3_SECRET ?? "",
   },
-  assemblyApiKey: process.env.ASSEMBLY_API_TOKEN ?? "",
+  assembly: {
+    apiKey: process.env.ASSEMBLY_API_TOKEN ?? "",
+  },
+};
+
+const assemblyConfig = {
+  transcriptEndpoint: "https://api.assemblyai.com/v2/transcript",
+  headers: {
+    Authorization: config.assembly.apiKey,
+    "Content-Type": "application/json",
+  },
 };
 
 if (config.s3.accessKey === "" || config.s3.secretKey === "") {
@@ -134,10 +145,14 @@ const downloadFile = async (
   object.on("data", (chunk) => fileStream.write(chunk));
 
   await (async () =>
-    new Promise<void>((resolve) => {
+    new Promise<void>((resolve, reject) => {
       object.on("end", () => {
         console.log(`Reading ${key} finished`);
         resolve();
+      });
+      object.on("error", (e) => {
+        console.log(`Convert error ${e}`);
+        reject();
       });
     }))();
 
@@ -246,27 +261,21 @@ const handleTranscriptionInbox = async (minioWebhook: MinioWebhook) => {
   const transcriptionName = [key, "json"].join(".");
   const dest = join(tmp, transcriptionName);
 
-  // AssemblyAI transcript endpoint (where we submit the file)
-  const transcript_endpoint = "https://api.assemblyai.com/v2/transcript";
-
   // request parameters where Speaker Diarization has been enabled
   const data = {
     audio_url: presignedUrl,
     speaker_labels: true,
     entity_detection: true,
+    webhook_url: `${config.selfHost}/assembly-callback`,
   };
 
-  // HTTP request headers
-  const headers = {
-    Authorization: config.assemblyApiKey,
-    "Content-Type": "application/json",
-  };
-
-  console.log(`Submitting ${presignedUrl} to ${transcript_endpoint}`);
+  console.log(
+    `Submitting ${presignedUrl} to ${assemblyConfig.transcriptEndpoint}`
+  );
 
   // submit for transcription via HTTP request
-  const response = await axios.post(transcript_endpoint, data, {
-    headers: headers,
+  const response = await axios.post(assemblyConfig.transcriptEndpoint, data, {
+    headers: assemblyConfig.headers,
   });
 
   console.log(`Submission response: ${JSON.stringify(response.data)}`);
@@ -276,7 +285,7 @@ const handleTranscriptionInbox = async (minioWebhook: MinioWebhook) => {
 
   while (true) {
     const pollingResponse = await axios.get(pollingEndpoint, {
-      headers: headers,
+      headers: assemblyConfig.headers,
     });
     const transcriptionResult = pollingResponse.data;
 
@@ -303,22 +312,54 @@ const handleTranscriptionOutbox = async (minioWebhook: MinioWebhook) => {};
 app.post("/minio-webhook", async (req, res) => {
   console.log(req.body);
   const webhookBody: MinioWebhook = req.body;
-  switch (webhookBody.Records[0]?.s3.bucket.arn) {
-    case "arn:aws:s3:::ffmpeg-inbox":
-      return res.send(await handleFfmpegInbox(webhookBody));
-      break;
-    case "arn:aws:s3:::ffmpeg-outbox":
-      return res.send(await handleFfmpegOutbox(webhookBody));
-      break;
-    case "arn:aws:s3:::transcription-inbox":
-      return res.send(await handleTranscriptionInbox(webhookBody));
-      break;
-    case "arn:aws:s3:::transcription-outbox":
-      return res.send(await handleTranscriptionOutbox(webhookBody));
-      break;
-    default:
-      return res.status(400).send();
+  try {
+    switch (webhookBody.Records[0]?.s3.bucket.arn) {
+      case "arn:aws:s3:::ffmpeg-inbox":
+        return res.send(await handleFfmpegInbox(webhookBody));
+        break;
+      case "arn:aws:s3:::ffmpeg-outbox":
+        return res.send(await handleFfmpegOutbox(webhookBody));
+        break;
+      case "arn:aws:s3:::transcription-inbox":
+        return res.send(await handleTranscriptionInbox(webhookBody));
+        break;
+      case "arn:aws:s3:::transcription-outbox":
+        return res.send(await handleTranscriptionOutbox(webhookBody));
+        break;
+      default:
+        return res.status(400).send();
+    }
+  } catch (e) {
+    return res.status(500).send(e);
   }
+});
+
+app.post("/assembly-callback", async (req, res) => {
+  const { transcript_id, status } = req.body;
+
+  const pollingEndpoint = `https://api.assemblyai.com/v2/transcript/${transcript_id}`;
+
+  while (true) {
+    const pollingResponse = await axios.get(pollingEndpoint, {
+      headers: assemblyConfig.headers,
+    });
+    const transcriptionResult = pollingResponse.data;
+
+    if (transcriptionResult.status === "completed") {
+      console.log(`Transcription finished ${transcript_id}`);
+      await minioClient.putObject(
+        "transcription-outbox",
+        [transcript_id, "json"].join("."),
+        pollingResponse.data
+      );
+      break;
+    } else if (transcriptionResult.status === "error") {
+      throw new Error(`Transcription failed: ${transcriptionResult.error}`);
+    } else {
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+    }
+  }
+  res.send();
 });
 
 app.listen(port, () => {
