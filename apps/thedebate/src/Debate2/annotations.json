@@ -1,0 +1,107 @@
+[
+  {
+    "start": 13150,
+    "end": 13998,
+    "text": "Here's Ariyan's annotation",
+    "annotatedBy": [
+      {
+        "name": "Ariyan"
+      }
+    ],
+    "type": "PlainText",
+    "data": {},
+    "color": "255,0,0"
+  },
+  {
+    "start": 17822,
+    "end": 20686,
+    "text": "Here's Ariyan's second annotation",
+    "annotatedBy": [
+      {
+        "name": "Ariyan"
+      }
+    ],
+    "type": "PlainText",
+    "data": {},
+    "color": "0,0,255"
+  },
+  {
+    "start": 32296,
+    "end": 33886,
+    "text": "Here's Ariyan's third annotation",
+    "annotatedBy": [
+      {
+        "name": "Ariyan"
+      }
+    ],
+    "type": "PlainText",
+    "data": {},
+    "color": "0,0,255"
+  },
+  {
+    "start": 80604,
+    "end": 85814,
+    "text": "Here's Ariyan's fifth annotation",
+    "annotatedBy": [
+      {
+        "name": "Ariyan"
+      }
+    ],
+    "type": "PlainText",
+    "data": {},
+    "color": "0,200,0"
+  },
+  {
+    "start": 59892,
+    "end": 60142,
+    "text": "Here's Ariyan's forth annotation",
+    "annotatedBy": [
+      {
+        "name": "Ariyan"
+      }
+    ],
+    "type": "PlainText",
+    "data": {},
+    "color": "255,0,0"
+  },
+
+  {
+    "start": 94670,
+    "end": 98000,
+    "text": "Here's my annotation",
+    "annotatedBy": [
+      {
+        "name": "UserA"
+      }
+    ],
+    "type": "PlainText",
+    "data": {},
+    "color": "255,0,0"
+  },
+  {
+    "start": 85862,
+    "end": 86762,
+    "text": "Another Annotation by Ariyan",
+    "annotatedBy": [
+      {
+        "name": "Ariyan"
+      }
+    ],
+    "type": "PlainText",
+    "data": {},
+    "color": "0,0,255"
+  },
+  {
+    "start": 91062,
+    "end": 92460,
+    "text": "Final Annotation by Ariyan",
+    "annotatedBy": [
+      {
+        "name": "Ariyan"
+      }
+    ],
+    "type": "PlainText",
+    "data": {},
+    "color": "0,0,255"
+  }
+]
