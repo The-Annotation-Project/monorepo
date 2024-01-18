@@ -5,6 +5,9 @@ importers:
   .:
     specifiers: {}
 
+  ../../apps/backend:
+    specifiers: {}
+
   ../../apps/thedebate:
     specifiers:
       '@babel/plugin-proposal-private-property-in-object': ~7.21.11

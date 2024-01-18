@@ -500,6 +500,10 @@
       "projectFolder": "apps/thedebate"
     },
     {
+      "packageName": "@the-annotation-project/backend",
+      "projectFolder": "apps/backend"
+    },
+    {
       "packageName": "@the-annotation-project/media-pipeline-listener",
       "projectFolder": "services/media-pipeline-listener"
     },
