@@ -4,6 +4,9 @@ import { AuthRequest } from "../@types/types";
 import { minioClient } from "../config/minio";
 import { v4 as uuid } from "uuid";
 import { IUser } from "../modals/User";
+import bcrypt from "bcrypt";
+
+const saltRounds = 10;
 
 // Signup controller
 export const signUp = async (req: AuthRequest, res: Response): Promise<void> => {
@@ -39,12 +42,12 @@ export const signUp = async (req: AuthRequest, res: Response): Promise<void> => 
                 res.status(400).json({ message: "Password must contain at least one uppercase letter" });
                 return;
             }
-
+            const hashedPassword = bcrypt.hashSync(password, saltRounds);
             let newUsers = [
                 {
                     id: uuid(),
                     username,
-                    password,
+                    password: hashedPassword,
                 },
                 ...allUsers,
             ];
@@ -77,13 +80,18 @@ export const login = (req: AuthRequest, res: Response): void => {
         }
         responseObj.on("data", (data) => {
             const users = JSON.parse(data.toString());
-            const user = users.find((u: IUser) => u.username === username && u.password === password);
+
+            const user = users.find((u: IUser) => u.username === username);
 
             if (!user) {
-                res.status(401).json({ message: "Invalid username or password" });
+                res.status(401).json({ message: "Invalid username" });
                 return;
             }
-
+            const planPass = bcrypt.compareSync(password, user.password);
+            if (!planPass) {
+                res.status(401).json({ message: "Invalid password" });
+                return;
+            }
             // Create and sign a JWT
             const token = jwtUtils.signToken({ id: user.id, username: user.username });
 

@@ -9,7 +9,8 @@
     "forceConsistentCasingInFileNames": true,
     "typeRoots" : ["./src/@types", "./node_modules/@types"],
     "resolveJsonModule": true,
+    "noImplicitAny": false
   },
-  "include": ["src/**/*.ts", "types.d.ts", "src/**/*.json"],
+  "include": ["src/**/*.ts", "types.d.ts","index.d.ts", "src/**/*.json"],
   "exclude": ["node_modules"],
 }

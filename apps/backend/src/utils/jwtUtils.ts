@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
 
 // Secret key for JWT (you should keep this secret and not hardcode it in a real application)
-const secretKey = "your_secret_key";
+const secretKey = "pasjidfpdsaifjsadifpajsfdjfk;jfpsfjpsia";
 
 // Sign JWT
-export const signToken = (payload: object): string => jwt.sign(payload, secretKey, { expiresIn: "1h" });
+export const signToken = (payload: object): string => jwt.sign(payload, secretKey, { expiresIn: "2h" });
 
 // Verify JWT
 export const verifyToken = (token: string): Promise<object> =>
