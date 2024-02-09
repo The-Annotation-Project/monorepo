@@ -107,3 +107,33 @@ export const login = (req: AuthRequest, res: Response): void => {
 export const protectedRoute = (req: AuthRequest, res: Response): void => {
     res.json({ message: "This is a protected route", user: req.user });
 };
+export const currentUser = (req: AuthRequest, res: Response) => {
+    res.json({ user: req.user });
+};
+
+export const updateUser = (req: AuthRequest, res: Response) => {
+    const { Bucket } = process.env;
+    const { id } = req.user;
+    const { username } = req.body;
+    minioClient.getObject(Bucket!, "users.json", (err, responseObj) => {
+        responseObj.on("data", (chunk) => {
+            const users = JSON.parse(chunk.toString());
+            const userIndex = users.findIndex((u: IUser) => u.id === id);
+            let newUsers = [...users];
+            newUsers[userIndex] = {
+                ...users[userIndex],
+                username: username,
+            };
+            minioClient.putObject(Bucket!, "users.json", JSON.stringify(newUsers), (err) => {
+                if (err) {
+                    console.log(err);
+                }
+                console.log("Successfully uploaded users.json");
+            });
+            res.json({ user: { ...newUsers[userIndex], username } });
+        });
+        responseObj.on("end", () => {
+            console.log("Done");
+        });
+    });
+};
